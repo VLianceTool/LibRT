@@ -1,0 +1,52 @@
+﻿<Platform name="Windows">
+
+
+
+<exe>
+
+    <Compiler>bin/clang++.exe</Compiler>
+	<Linker>bin/clang++.exe</Linker>
+    <Linker_Static>bin/clang++.exe</Linker_Static>
+    <Linker_Dynamic>bin/clang++.exe</Linker_Dynamic>
+	
+    <Resource></Resource>
+</exe>
+
+<arguments>
+
+	 <Linker>-I"{wPath}include/" </Linker>
+	 <Linker>-I"{wPath}clang_inc/" </Linker>
+	 <Linker>-I"{wPath}i686-w64-mingw32/include/" </Linker>
+	 <Linker>-I"{wPath}i686-w64-mingw32/include/c++/" </Linker>
+	 <Linker>-I"{wPath}i686-w64-mingw32/include/c++/backward/" </Linker>
+
+	 
+	 <CompilerLinker>-target i686-pc-mingw32 </CompilerLinker>
+	 
+	<CompilerLinker>-I"{wDir}" </CompilerLinker>
+ 
+     <CompilerLinker>-fno-rtti -fno-exceptions </CompilerLinker>
+	 <CompilerLinker>-m32 </CompilerLinker>
+	 <CompilerLinker>-fcolor-diagnostics -fansi-escape-codes </CompilerLinker>
+	 <CompilerLinker>-std=c++11 </CompilerLinker>
+	  
+	 <Compiler>-MD </Compiler>
+	 <Linker>-I"{wDir}" </Linker>
+
+	<Linker>-Qunused-arguments -Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Qunused-arguments -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>	
+  
+
+	<Linker>-Werror=return-type </Linker>
+	
+    <Linker>-static-libgcc -static-libstdc++ </Linker>
+   <Linker_Static>-static-libgcc -static-libstdc++ </Linker_Static>
+   <Linker_Dynamic>-static-libgcc -static-libstdc++ </Linker_Dynamic>
+	  
+   <Debug>-g -fstandalone-debug </Debug>
+	
+</arguments>
+  
+  <Website>https://clang.llvm.org/docs/UsersManual.html</Website>
+</Platform>
+
+

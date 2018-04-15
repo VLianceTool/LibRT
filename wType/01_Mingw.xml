@@ -1,0 +1,45 @@
+﻿<Platform type="Windows">
+<exe>
+
+    <Compiler>bin/g++.exe</Compiler>
+	<Linker>bin/g++.exe</Linker>
+    <Linker_Static>bin/g++.exe</Linker_Static>
+    <Linker_Dynamic>bin/g++.exe</Linker_Dynamic>
+	
+    <Resource></Resource>
+</exe>
+<arguments>
+
+	 <Linker>-I"{wPath}include/" </Linker>
+	 <Linker>-I"{wPath}clang_inc/" </Linker>
+	 <Linker>-I"{wPath}i686-w64-mingw32/include/" </Linker>
+	 <Linker>-I"{wPath}i686-w64-mingw32/include/c++/" </Linker>
+	 <Linker>-I"{wPath}i686-w64-mingw32/include/c++/backward/" </Linker>
+	
+	<CompilerLinker>-I"{wDir}" </CompilerLinker>
+ 
+     <CompilerLinker>-fno-rtti -fno-exceptions -g </CompilerLinker>
+	 <CompilerLinker>-m32 </CompilerLinker>
+
+	 <CompilerLinker>-std=c++11 </CompilerLinker>
+	  
+	 <Compiler>-MD </Compiler>
+	 <Linker>-I"{wDir}" </Linker>
+
+	<Linker>-Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>	
+  
+
+	<Linker>-Werror=return-type </Linker>
+	
+    <CompilerLinker>-static-libgcc -static-libstdc++  -g -fno-rtti </CompilerLinker>
+   <Linker_Static>-static-libgcc -static-libstdc++ </Linker_Static>
+   <Linker_Dynamic>-static-libgcc -static-libstdc++ </Linker_Dynamic>
+	  
+   <Debug>-g -fstandalone-debug </Debug>
+	
+</arguments>
+  
+  <Website>https://clang.llvm.org/docs/UsersManual.html</Website>
+</Platform>
+
+
