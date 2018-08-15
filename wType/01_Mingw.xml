@@ -1,6 +1,8 @@
 ﻿<Platform type="Windows">
 <exe>
 
+	<Debugger>gdb/gdb_32.exe</Debugger>
+
     <Compiler>bin/g++.exe</Compiler>
 	<Linker>bin/g++.exe</Linker>
     <Linker_Static>bin/g++.exe</Linker_Static>

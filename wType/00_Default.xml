@@ -4,6 +4,8 @@
 
 <exe>
 
+	<Debugger>gdb/gdb_32.exe</Debugger>
+  
     <Compiler>bin/clang++.exe</Compiler>
 	<Linker>bin/clang++.exe</Linker>
     <Linker_Static>bin/clang++.exe</Linker_Static>
