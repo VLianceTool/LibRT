@@ -13,7 +13,6 @@
 <arguments>
 
 	 <Linker>-I"{wPath}include/" </Linker>
-	 <Linker>-I"{wPath}clang_inc/" </Linker>
 	 <Linker>-I"{wPath}i686-w64-mingw32/include/" </Linker>
 	 <Linker>-I"{wPath}i686-w64-mingw32/include/c++/" </Linker>
 	 <Linker>-I"{wPath}i686-w64-mingw32/include/c++/backward/" </Linker>
