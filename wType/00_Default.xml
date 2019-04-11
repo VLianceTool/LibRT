@@ -56,9 +56,10 @@
 	<Linker_Static>-static-libgcc -static-libstdc++ </Linker_Static>
 	<Linker_Dynamic>-static-libgcc -static-libstdc++ </Linker_Dynamic>
 
-	<CompilerLinker>-g </CompilerLinker>
-
-	<Debug>-g -fstandalone-debug </Debug>
+	<Debug>-g</Debug>
+	<O2>-O2</O2>
+	<O3>-O3</O3>
+	<OS>-Os</OS>
    
 </Arguments>
 
