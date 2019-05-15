@@ -14,7 +14,7 @@
 
     <Compiler>bin/g++.exe</Compiler>
 	<Linker>bin/g++.exe</Linker>
-    <Linker_Static>bin/g++.exe</Linker_Static>
+    <Linker_Static>bin/ar.exe</Linker_Static>
     <Linker_Dynamic>bin/g++.exe</Linker_Dynamic>
 	
 	
@@ -47,7 +47,7 @@
 	<Linker>-Werror=return-type </Linker>
 	
 	<Linker>-static-libgcc -static-libstdc++ </Linker>
-	<Linker_Static>-r -s </Linker_Static>
+	<Linker_Static>rcs </Linker_Static>
 	<Linker_Dynamic>-shared </Linker_Dynamic>
 
 	<Debug>-g</Debug>
