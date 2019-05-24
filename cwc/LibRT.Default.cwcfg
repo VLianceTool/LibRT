@@ -1,71 +1,107 @@
 ﻿<Toolchain> <!-- LibRT Cwc Config -->
 
+ <!-- <cmd>-{lpThread}=-I ./  {_pModule}i686-w64-mingw32/lib/libwinpthread.a   {_pModule}i686-w64-mingw32/lib/libpthread.a  {_pModule}i686-w64-mingw32/lib/librtm.a</cmd> -->
+
 <Config>
-	<Platform name="Windows" default="true"></Platform>
-	 <!-- <Platform name="Linux"></Platform>-->
-	
-	<Type name="C">   <Extention>c</Extention>              </Type>
-	<Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
-	 <!-- <Type name="C~">  <Extention>cw</Extention>             </Type>-->
+    <Platform name="Windows" default="true"></Platform>
+     <!-- <Platform name="Linux"></Platform>-->
+   
+    <Type name="C">   <Extention>c</Extention>              </Type>
+    <Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
+     <!-- <Type name="C~">  <Extention>cw</Extention>       </Type>-->
 </Config>
 
 
 <Exe>
 
-	<Debugger>gdb/gdb_32.exe</Debugger>
-	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
+    <Debugger>gdb/gdb_32.exe</Debugger>
+    <Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
 
-	<Compiler type="C">bin/clang.exe -std=c99 </Compiler>
+    <Compiler type="C">bin/clang.exe -std=c99 </Compiler>
 
-	<Compiler>bin/clang++.exe</Compiler>
+    <Compiler>bin/clang++.exe</Compiler>
 
-	<Linker>bin/clang++.exe</Linker>
-	<Linker_Static>bin/ar.exe</Linker_Static>
-	<Linker_Dynamic>bin/clang++.exe</Linker_Dynamic>
+    <Linker>bin/clang++.exe</Linker>
+    <Linker_Static>bin/ar.exe</Linker_Static>
+    <Linker_Dynamic>bin/clang++.exe</Linker_Dynamic>
 
-	<Resource></Resource>
-	
+    <Resource></Resource>
+   
 </Exe>
 
 <Arguments>
-
-	<CompilerLinker>-I"{_pModule}clang_inc/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}include/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/c++/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/c++/backward/" </CompilerLinker>
-
-
-	<CompilerLinker>-target i686-pc-mingw32 </CompilerLinker>
-
-	<CompilerLinker>-I"{_pProject}" </CompilerLinker>
-
-	<CompilerLinker>-fno-rtti -fno-exceptions </CompilerLinker>
-	<CompilerLinker>-m32 </CompilerLinker>
-	<CompilerLinker>-fcolor-diagnostics -fansi-escape-codes </CompilerLinker>
-	<!-- <CompilerLinker type="C++">-std=c++11 </CompilerLinker> --> <!--  (set a defalut value)  --> 
-
-	<Compiler>-MD </Compiler>
-	<Linker>-I"{_pProject}" </Linker>
-
-	<Linker>-Qunused-arguments -Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Qunused-arguments -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>	
-  
-	<Linker>-Werror=return-type </Linker>
-	
-	<Linker>-static-libgcc -static-libstdc++ </Linker>
-	<Linker_Static>-r -s </Linker_Static>
-	<Linker_Dynamic>-shared </Linker_Dynamic>
-
-	<Debug>-g</Debug>
-	<O2>-O2</O2>
-	<O3>-O3</O3>
-	<OS>-Os</OS>
+    <CompilerLinker>-target i686-pc-mingw32 </CompilerLinker>
    
+        <!--
+    <CompilerLinker>-I"{_pModule}clang_inc/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}clang_inc/clang-c/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}include/" </CompilerLinker>
+-->
+
+    <CompilerLinker>-I"{_pModule}clang_inc/" </CompilerLinker>
+	<CompilerLinker>-I"{_pModule}pthreads/" </CompilerLinker>
+
+    <!--  x86_64-w64, m64 only  -->
+    <!--
+    <CompilerLinker>-target x86_64-w64-windows-gnu </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}x86_64-w64-mingw32/include/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/x86_64-w64-mingw32/8.1.0/include/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/32/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32/"</CompilerLinker>
+    <Linker>-L"{_pModule}lib/gcc/x86_64-w64-mingw32/8.1.0/" </Linker>
+    <Linker>-L"{_pModule}x86_64-w64-mingw32/lib/"</Linker>
+    -->
+    <!--  m32     -->
+    <!--
+    <CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/include/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/c++/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32/32/" </CompilerLinker>
+    <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32/"</CompilerLinker>
+    -->
+    <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/" </CompilerLinker>
+   
+    <!--
+     <Linker>-L"{_pModule}lib/gcc/i686-w64-mingw32/lib/" </Linker>
+    <Linker>-L"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/" </Linker>
+    <Linker>-L"{_pModule}i686-w64-mingw32/lib/"</Linker>
+    -->
+    <!-- <CompilerLinker>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/" </CompilerLinker>-->
+
+
+    <CompilerLinker>-I"{_pProject}" </CompilerLinker>
+
+    <!--  <CompilerLinker>-fno-rtti </CompilerLinker> -->
+    <CompilerLinker>-fno-rtti -fno-exceptions </CompilerLinker>
+   
+    <CompilerLinker>-m32 </CompilerLinker>
+    <CompilerLinker>-fcolor-diagnostics -fansi-escape-codes </CompilerLinker>
+    <!-- <CompilerLinker type="C++">-std=c++11 </CompilerLinker> --> <!--  (set a defalut value)  -->
+    <!-- -femulated-tls -->
+    <CompilerLinker>-Wno-pragma-pack -m32 </CompilerLinker>
+   
+    <Compiler>-MD </Compiler>
+    <Linker>-I"{_pProject}" </Linker>
+   
+    <Linker>-Qunused-arguments -Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Qunused-arguments -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>   
+ 
+    <Linker>-Werror=return-type </Linker>
+   
+    <Linker>-static-libgcc -static-libstdc++  -v </Linker>
+    <Linker_Static>-r -s </Linker_Static>
+    <Linker_Dynamic>-target i686-pc-mingw32  -shared </Linker_Dynamic>
+
+    <Debug>-g</Debug>
+    <O2>-O2</O2>
+    <O3>-O3</O3>
+    <OS>-Os</OS>
+  
 </Arguments>
 
-  
+ 
 <Website>https://clang.llvm.org/docs/UsersManual.html</Website>
-  
+ 
  
 </Toolchain> <!-- End -->
-

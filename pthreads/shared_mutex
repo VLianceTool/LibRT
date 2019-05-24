@@ -1,0 +1,11 @@
+#ifndef H_shared_mutex
+#define H_shared_mutex
+
+#include "throw"
+#include <c++\shared_mutex>
+#include <sdkddkver.h>
+#define _WINDOWS_
+#include "mingw-std-threads/mingw.shared_mutex.h"
+#undef _WINDOWS_
+
+#endif

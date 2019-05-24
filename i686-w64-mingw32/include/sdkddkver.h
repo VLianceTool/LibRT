@@ -22,6 +22,8 @@
 #define _WIN32_WINNT_WIN7		0x0601
 #define _WIN32_WINNT_WIN8		0x0602
 #define _WIN32_WINNT_WINBLUE            0x0603
+#define _WIN32_WINNT_WINTHRESHOLD       0x0A00
+#define _WIN32_WINNT_WIN10              0x0A00
 
 /* _WIN32_IE */
 #define _WIN32_IE_IE20			0x0200
@@ -127,6 +129,8 @@
 #define NTDDI_WIN7			0x06010000
 #define NTDDI_WIN8                      0x06020000
 #define NTDDI_WINBLUE                   0x06030000
+#define NTDDI_WINTHRESHOLD              0x0A000000
+#define NTDDI_WIN10                     0x0A000000
 
 /* Version Fields in NTDDI_VERSION */
 #define OSVERSION_MASK			0xFFFF0000U

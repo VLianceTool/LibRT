@@ -1,0 +1,12 @@
+#ifndef H_condition_variable
+#define H_condition_variable
+
+#include <mutex>
+
+#include "throw"
+#include <sdkddkver.h>
+#define _WINDOWS_
+#include "mingw-std-threads/mingw.condition_variable.h"
+#undef _WINDOWS_
+
+#endif

@@ -1,5 +1,5 @@
 /*
-   Copyright (c) 2011-2013 mingw-w64 project
+   Copyright (c) 2011-2016 mingw-w64 project
 
    Permission is hereby granted, free of charge, to any person obtaining a
    copy of this software and associated documentation files (the "Software"),
@@ -212,7 +212,7 @@ struct _pthread_cleanup
 
 /* Note that if async cancelling is used, then there is a race here */
 #define pthread_cleanup_pop(E)\
-    (*pthread_getclean() = _pthread_cup.next, (E?_pthread_cup.func((pthread_once_t *)_pthread_cup.arg):0));}
+    (*pthread_getclean() = _pthread_cup.next, ((E) ? (_pthread_cup.func((pthread_once_t *)_pthread_cup.arg)) : (void)0));}
 
 /* Windows doesn't have this, so declare it ourselves. */
 #ifndef _TIMESPEC_DEFINED
@@ -262,7 +262,7 @@ int WINPTHREAD_API pthread_attr_getschedparam(const pthread_attr_t *attr, struct
 int WINPTHREAD_API pthread_getschedparam(pthread_t thread, int *pol, struct sched_param *param);
 int WINPTHREAD_API pthread_setschedparam(pthread_t thread, int pol, const struct sched_param *param);
 int WINPTHREAD_API pthread_attr_setschedpolicy (pthread_attr_t *attr, int pol);
-int WINPTHREAD_API pthread_attr_getschedpolicy (pthread_attr_t *attr, int *pol);
+int WINPTHREAD_API pthread_attr_getschedpolicy (const pthread_attr_t *attr, int *pol);
 
 /* synchronization objects */
 typedef void	*pthread_spinlock_t;
@@ -362,7 +362,7 @@ int WINPTHREAD_API pthread_attr_setinheritsched(pthread_attr_t *a, int flag);
 int WINPTHREAD_API pthread_attr_getinheritsched(const pthread_attr_t *a, int *flag);
 int WINPTHREAD_API pthread_attr_setscope(pthread_attr_t *a, int flag);
 int WINPTHREAD_API pthread_attr_getscope(const pthread_attr_t *a, int *flag);
-int WINPTHREAD_API pthread_attr_getstackaddr(pthread_attr_t *attr, void **stack);
+int WINPTHREAD_API pthread_attr_getstackaddr(const pthread_attr_t *attr, void **stack);
 int WINPTHREAD_API pthread_attr_setstackaddr(pthread_attr_t *attr, void *stack);
 int WINPTHREAD_API pthread_attr_getstacksize(const pthread_attr_t *attr, size_t *size);
 int WINPTHREAD_API pthread_attr_setstacksize(pthread_attr_t *attr, size_t size);

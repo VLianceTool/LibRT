@@ -13,6 +13,15 @@
 #define __USE_MINGW_STRTOX 1
 #endif
 
+#if defined(__LIBMSVCRT__)
+/* When building mingw-w64, this should be blank.  */
+#define _SECIMP
+#else
+#ifndef _SECIMP
+#define _SECIMP __declspec(dllimport)
+#endif /* _SECIMP */
+#endif /* defined(_CRTBLD) || defined(__LIBMSVCRT__) */
+
 #pragma pack(push,_CRT_PACKING)
 
 #ifdef __cplusplus
@@ -102,11 +111,13 @@ extern "C" {
   extern int __mb_cur_max;
 #define __mb_cur_max	__mb_cur_max
 #else
+#if __MSVCRT_VERSION__ < 0x1400
   extern int * __MINGW_IMP_SYMBOL(__mb_cur_max);
-#define __mb_cur_max	(* __MINGW_IMP_SYMBOL(__mb_cur_max))
+#endif
+#define __mb_cur_max	(___mb_cur_max_func())
 #endif
 #endif
-#define ___mb_cur_max_func() (__mb_cur_max)
+_CRTIMP int __cdecl ___mb_cur_max_func(void);
 #endif
 
 #define __max(a,b) (((a) > (b)) ? (a) : (b))
@@ -152,138 +163,181 @@ extern "C" {
   extern char *_sys_errlist[];
   extern int _sys_nerr;
 #else
-  extern _CRTIMP char *_sys_errlist[1];
-  extern _CRTIMP int _sys_nerr;
+#if __MSVCRT_VERSION__ >= 0x1400
+  _CRTIMP char **__cdecl __sys_errlist(void);
+  _CRTIMP int *__cdecl __sys_nerr(void);
+#define _sys_nerr (*__sys_nerr())
+#define _sys_errlist (__sys_errlist())
+#else
+  extern __declspec(dllimport) char *_sys_errlist[1];
+  extern __declspec(dllimport) int _sys_nerr;
+#endif /* __MSVCRT_VERSION__ < 0x1400 */
 #endif
-#if (defined(_X86_) && !defined(__x86_64))
-  _CRTIMP int *__cdecl __p___argc(void);
+
+  /* We have a fallback definition of __p___argv and __p__fmode for
+     msvcrt versions that lack it. */
   _CRTIMP char ***__cdecl __p___argv(void);
+  _CRTIMP int *__cdecl __p__fmode(void);
+#if (defined(_X86_) && !defined(__x86_64)) || (__MSVCRT_VERSION__ >= 0x1400)
+  _CRTIMP int *__cdecl __p___argc(void);
   _CRTIMP wchar_t ***__cdecl __p___wargv(void);
   _CRTIMP char ***__cdecl __p__environ(void);
   _CRTIMP wchar_t ***__cdecl __p__wenviron(void);
   _CRTIMP char **__cdecl __p__pgmptr(void);
   _CRTIMP wchar_t **__cdecl __p__wpgmptr(void);
 #endif
-#ifndef __argc
-#ifdef _MSVCRT_
-  extern int __argc;
-#else
-  extern int * __MINGW_IMP_SYMBOL(__argc);
-#define __argc (* __MINGW_IMP_SYMBOL(__argc))
-#endif
-#endif
-#ifndef __argv
-#ifdef _MSVCRT_
-  extern char **__argv;
-#else
-  extern char *** __MINGW_IMP_SYMBOL(__argv);
-#define __argv	(* __MINGW_IMP_SYMBOL(__argv))
-#endif
-#endif
-#ifndef __wargv
-#ifdef _MSVCRT_
-  extern wchar_t **__wargv;
-#else
-  extern wchar_t *** __MINGW_IMP_SYMBOL(__wargv);
-#define __wargv (* __MINGW_IMP_SYMBOL(__wargv))
-#endif
-#endif
 
-#ifdef _POSIX_
-  extern char **environ;
-#else
-#ifndef _environ
-#ifdef _MSVCRT_
-  extern char **_environ;
-#else
-  extern char *** __MINGW_IMP_SYMBOL(_environ);
-#define _environ (* __MINGW_IMP_SYMBOL(_environ))
-#endif
-#endif
-
-#ifndef _wenviron
-#ifdef _MSVCRT_
-  extern wchar_t **_wenviron;
-#else
-  extern wchar_t *** __MINGW_IMP_SYMBOL(_wenviron);
-#define _wenviron (* __MINGW_IMP_SYMBOL(_wenviron))
-#endif
-#endif
-#endif
-#ifndef _pgmptr
-#ifdef _MSVCRT_
-  extern char *_pgmptr;
-#else
-  extern char ** __MINGW_IMP_SYMBOL(_pgmptr);
-#define _pgmptr	(* __MINGW_IMP_SYMBOL(_pgmptr))
-#endif
-#endif
-
-#ifndef _wpgmptr
-#ifdef _MSVCRT_
-  extern wchar_t *_wpgmptr;
-#else
-  extern wchar_t ** __MINGW_IMP_SYMBOL(_wpgmptr);
-#define _wpgmptr (* __MINGW_IMP_SYMBOL(_wpgmptr))
-#endif
-#endif
   errno_t __cdecl _get_pgmptr(char **_Value);
   errno_t __cdecl _get_wpgmptr(wchar_t **_Value);
-#ifndef _fmode
-#ifdef _MSVCRT_
-  extern int _fmode;
-#else
-  extern int * __MINGW_IMP_SYMBOL(_fmode);
-#define _fmode	(* __MINGW_IMP_SYMBOL(_fmode))
-#endif
-#endif
   _CRTIMP errno_t __cdecl _set_fmode(int _Mode);
   _CRTIMP errno_t __cdecl _get_fmode(int *_PMode);
 
-#ifndef _osplatform
-#ifdef _MSVCRT_
-  extern unsigned int _osplatform;
-#else
-  extern unsigned int * __MINGW_IMP_SYMBOL(_osplatform);
-#define _osplatform (* __MINGW_IMP_SYMBOL(_osplatform))
+#ifndef _fmode
+#define _fmode (* __p__fmode())
 #endif
+
+#ifdef _MSVCRT_
+
+#ifndef __argc
+  extern int __argc;
+#endif
+#ifndef __argv
+  extern char **__argv;
+#endif
+#ifndef __wargv
+  extern wchar_t **__wargv;
+#endif
+
+#ifndef _POSIX_
+#ifndef _environ
+  extern char **_environ;
+#endif
+#ifndef _wenviron
+  extern wchar_t **_wenviron;
+#endif
+#endif /* !_POSIX_ */
+
+#ifndef _pgmptr
+  extern char *_pgmptr;
+#endif
+
+#ifndef _wpgmptr
+  extern wchar_t *_wpgmptr;
+#endif
+
+#ifndef _osplatform
+  extern unsigned int _osplatform;
 #endif
 
 #ifndef _osver
-#ifdef _MSVCRT_
   extern unsigned int _osver;
-#else
-  extern unsigned int * __MINGW_IMP_SYMBOL(_osver);
-#define _osver	(* __MINGW_IMP_SYMBOL(_osver))
-#endif
 #endif
 
 #ifndef _winver
-#ifdef _MSVCRT_
   extern unsigned int _winver;
-#else
-  extern unsigned int * __MINGW_IMP_SYMBOL(_winver);
-#define _winver	(* __MINGW_IMP_SYMBOL(_winver))
-#endif
 #endif
 
 #ifndef _winmajor
-#ifdef _MSVCRT_
   extern unsigned int _winmajor;
-#else
-  extern unsigned int * __MINGW_IMP_SYMBOL(_winmajor);
-#define _winmajor (* __MINGW_IMP_SYMBOL(_winmajor))
-#endif
 #endif
 
 #ifndef _winminor
-#ifdef _MSVCRT_
   extern unsigned int _winminor;
-#else
+#endif
+
+#elif __MSVCRT_VERSION__ >= 0x1400
+
+#ifndef __argc
+#define __argc (* __p___argc())
+#endif
+#ifndef __argv
+#define __argv (* __p___argv())
+#endif
+#ifndef __wargv
+#define __wargv (* __p___wargv())
+#endif
+
+#ifndef _POSIX_
+#ifndef _environ
+#define _environ (* __p__environ())
+#endif
+
+#ifndef _wenviron
+#define _wenviron (* __p__wenviron())
+#endif
+#endif /* !_POSIX_ */
+
+#ifndef _pgmptr
+#define _pgmptr (* __p__pgmptr())
+#endif
+
+#ifndef _wpgmptr
+#define _wpgmptr (* __p__wpgmptr())
+#endif
+
+#else /* __MSVCRT_VERSION__ >= 0x1400 */
+
+#ifndef __argc
+  extern int * __MINGW_IMP_SYMBOL(__argc);
+#define __argc (* __MINGW_IMP_SYMBOL(__argc))
+#endif
+#ifndef __argv
+  extern char *** __MINGW_IMP_SYMBOL(__argv);
+#define __argv	(* __p___argv())
+#endif
+#ifndef __wargv
+  extern wchar_t *** __MINGW_IMP_SYMBOL(__wargv);
+#define __wargv (* __MINGW_IMP_SYMBOL(__wargv))
+#endif
+
+#ifndef _POSIX_
+#ifndef _environ
+  extern char *** __MINGW_IMP_SYMBOL(_environ);
+#define _environ (* __MINGW_IMP_SYMBOL(_environ))
+#endif
+
+#ifndef _wenviron
+  extern wchar_t *** __MINGW_IMP_SYMBOL(_wenviron);
+#define _wenviron (* __MINGW_IMP_SYMBOL(_wenviron))
+#endif
+#endif /* !_POSIX_ */
+
+#ifndef _pgmptr
+  extern char ** __MINGW_IMP_SYMBOL(_pgmptr);
+#define _pgmptr	(* __MINGW_IMP_SYMBOL(_pgmptr))
+#endif
+
+#ifndef _wpgmptr
+  extern wchar_t ** __MINGW_IMP_SYMBOL(_wpgmptr);
+#define _wpgmptr (* __MINGW_IMP_SYMBOL(_wpgmptr))
+#endif
+
+#ifndef _osplatform
+  extern unsigned int * __MINGW_IMP_SYMBOL(_osplatform);
+#define _osplatform (* __MINGW_IMP_SYMBOL(_osplatform))
+#endif
+
+#ifndef _osver
+  extern unsigned int * __MINGW_IMP_SYMBOL(_osver);
+#define _osver	(* __MINGW_IMP_SYMBOL(_osver))
+#endif
+
+#ifndef _winver
+  extern unsigned int * __MINGW_IMP_SYMBOL(_winver);
+#define _winver	(* __MINGW_IMP_SYMBOL(_winver))
+#endif
+
+#ifndef _winmajor
+  extern unsigned int * __MINGW_IMP_SYMBOL(_winmajor);
+#define _winmajor (* __MINGW_IMP_SYMBOL(_winmajor))
+#endif
+
+#ifndef _winminor
   extern unsigned int * __MINGW_IMP_SYMBOL(_winminor);
 #define _winminor (* __MINGW_IMP_SYMBOL(_winminor))
 #endif
-#endif
+
+#endif /* !_MSVCRT_ && __MSVCRT_VERSION__ < 0x1400 */
 
   errno_t __cdecl _get_osplatform(unsigned int *_Value);
   errno_t __cdecl _get_osver(unsigned int *_Value);
@@ -317,7 +371,7 @@ extern "C" {
 
 #pragma push_macro("abort")
 #undef abort
-  void __cdecl __declspec(noreturn) abort(void);
+  void __cdecl __MINGW_ATTRIB_NORETURN abort(void);
 #pragma pop_macro("abort")
 
 #endif /* _CRT_TERMINATE_DEFINED */
@@ -388,7 +442,7 @@ extern "C" {
   #endif
 #endif
 #ifdef _CRT_RAND_S
-  _CRTIMP errno_t __cdecl rand_s(unsigned int *randomValue);
+  _SECIMP errno_t __cdecl rand_s(unsigned int *randomValue);
 #endif
 
 #if defined(__USE_MINGW_STRTOX)
@@ -416,7 +470,8 @@ float __cdecl __MINGW_NOTHROW strtof(const char * __restrict__ _Str,char ** __re
   /* libmingwex.a provides a c99-compliant strtod() exported as __strtod() */
   extern double __cdecl __MINGW_NOTHROW
   __strtod (const char * __restrict__ , char ** __restrict__);
-#if !defined(__USE_MINGW_STRTOX)
+// The ucrtbase version of strtod is C99 compliant, so we don't need to redirect it to the mingw version.
+#if !defined(__USE_MINGW_STRTOX) && __MSVCRT_VERSION__ < 0x1400
 #define strtod __strtod
 #endif /* !defined(__USE_MINGW_STRTOX) */
 #endif /* __NO_ISOCEXT */

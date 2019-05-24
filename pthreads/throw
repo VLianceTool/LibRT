@@ -1,0 +1,10 @@
+#include <c++/bits/exception_defines.h>
+/*
+#if ! __cpp_exceptions
+// Iff -fno-exceptions, transform error handling code to work without it.
+# define __throw_abort __throw_exception_again
+#else
+# define __throw_abort throw
+#endif
+*/
+/// Replace all throw with __throw_exception_again

@@ -28,21 +28,28 @@ extern "C" {
 #endif
 
 #if defined(__x86_64) && \
-  !(defined(_X86_) || defined(__i386__) || defined(_IA64_) || defined (__arm__))
+  !(defined(_X86_) || defined(__i386__) || defined(_IA64_) || defined (__arm__) || defined(__aarch64__))
 #if !defined(_AMD64_)
 #define _AMD64_
 #endif
 #endif /* _AMD64_ */
 
 #if defined(__arm__) && \
-  !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__ia64__))
+  !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__ia64__) || defined(__aarch64__))
 #if !defined(_ARM_)
 #define _ARM_
 #endif
 #endif /* _ARM_ */
 
+#if defined(__aarch64__) && \
+  !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__ia64__) || defined(__arm__))
+#if !defined(_ARM64_)
+#define _ARM64_
+#endif
+#endif /* _ARM64_ */
+
 #if defined(__ia64__) && \
-  !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__arm__))
+  !(defined(_X86_) || defined(__x86_64) || defined(_AMD64_) || defined (__arm__) || defined(__aarch64__))
 #if !defined(_IA64_)
 #define _IA64_
 #endif
@@ -94,7 +101,7 @@ extern "C" {
 
 #undef  UNALIGNED	/* avoid redefinition warnings vs _mingw.h */
 #undef  UNALIGNED64
-#if defined (__ia64__) || defined (__x86_64__) || defined (__arm__)
+#if defined (__ia64__) || defined (__x86_64__) || defined (__arm__) || defined(__aarch64__)
 #define ALIGNMENT_MACHINE
 #define UNALIGNED __unaligned
 #if defined (_WIN64)
@@ -124,7 +131,7 @@ extern "C" {
 
 #if defined (__x86_64__) || defined (__i386__)
 #define PROBE_ALIGNMENT(_s) TYPE_ALIGNMENT (DWORD)
-#elif defined (__ia64__) || defined (__arm__)
+#elif defined (__ia64__) || defined (__arm__) || defined(__aarch64__)
 #define PROBE_ALIGNMENT(_s) (TYPE_ALIGNMENT (_s) > TYPE_ALIGNMENT (DWORD) ? TYPE_ALIGNMENT (_s) : TYPE_ALIGNMENT (DWORD))
 #elif !defined (RC_INVOKED) && !defined (__WIDL__)
 #error No supported target architecture.
@@ -143,7 +150,7 @@ extern "C" {
 #include <basetsd.h>
 
 #ifndef DECLSPEC_IMPORT
-#if (defined (__i386__) || defined (__ia64__) || defined (__x86_64__) || defined (__arm__)) && !defined (__WIDL__)
+#if (defined (__i386__) || defined (__ia64__) || defined (__x86_64__) || defined (__arm__) || defined(__aarch64__)) && !defined (__WIDL__)
 #define DECLSPEC_IMPORT __declspec (dllimport)
 #else
 #define DECLSPEC_IMPORT
@@ -258,7 +265,7 @@ extern "C" {
 #endif
 #endif /* FASTCALL */
 
-#if defined(_ARM_)
+#if defined(_ARM_) || defined(_ARM64_)
 #define NTAPI
 #else
 #define NTAPI __stdcall
@@ -760,6 +767,7 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 #define PRODUCT_SERVER_FOR_SMALLBUSINESS_V        0x23
 #define PRODUCT_STANDARD_SERVER_V                 0x24
 #define PRODUCT_DATACENTER_SERVER_V               0x25
+#define PRODUCT_SERVER_V                          0x25
 #define PRODUCT_ENTERPRISE_SERVER_V               0x26
 #define PRODUCT_DATACENTER_SERVER_CORE_V          0x27
 #define PRODUCT_STANDARD_SERVER_CORE_V            0x28
@@ -780,6 +788,7 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 #define PRODUCT_SERVER_FOR_SB_SOLUTIONS_EM        0x37
 #define PRODUCT_SOLUTION_EMBEDDEDSERVER           0x38
 #define PRODUCT_SOLUTION_EMBEDDEDSERVER_CORE      0x39
+#define PRODUCT_PROFESSIONAL_EMBEDDED             0x3A
 #define PRODUCT_ESSENTIALBUSINESS_SERVER_MGMT     0x3B
 #define PRODUCT_ESSENTIALBUSINESS_SERVER_ADDL     0x3C
 #define PRODUCT_ESSENTIALBUSINESS_SERVER_MGMTSVC  0x3D
@@ -808,16 +817,41 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 #define PRODUCT_EMBEDDED_INDUSTRY_E               0x5B
 #define PRODUCT_EMBEDDED_INDUSTRY_A_E             0x5C
 #define PRODUCT_STORAGE_WORKGROUP_EVALUATION_SERVER 0x5F
-#define PRODUCT_STORAGE_STANDARD_EVALUATION_SERVER 0x60
+#define PRODUCT_STORAGE_STANDARD_EVALUATION_SERVER  0x60
 #define PRODUCT_CORE_ARM                          0x61
 #define PRODUCT_CORE_N                            0x62
 #define PRODUCT_CORE_COUNTRYSPECIFIC              0x63
 #define PRODUCT_CORE_SINGLELANGUAGE               0x64
+#define PRODUCT_CORE_LANGUAGESPECIFIC             0x64
 #define PRODUCT_CORE                              0x65
 #define PRODUCT_PROFESSIONAL_WMC                  0x67
 #define PRODUCT_MOBILE_CORE                       0x68
+#define PRODUCT_EMBEDDED_INDUSTRY_EVAL            0x69
+#define PRODUCT_EMBEDDED_INDUSTRY_E_EVAL          0x6A
+#define PRODUCT_EMBEDDED_EVAL                     0x6B
+#define PRODUCT_EMBEDDED_E_EVAL                   0x6C
+#define PRODUCT_NANO_SERVER                       0x6D
+#define PRODUCT_CLOUD_STORAGE_SERVER              0x6E
+#define PRODUCT_CORE_CONNECTED                    0x6F
+#define PRODUCT_PROFESSIONAL_STUDENT              0x70
+#define PRODUCT_CORE_CONNECTED_N                  0x71
+#define PRODUCT_PROFESSIONAL_STUDENT_N            0x72
+#define PRODUCT_CORE_CONNECTED_SINGLELANGUAGE     0x73
+#define PRODUCT_CORE_CONNECTED_COUNTRYSPECIFIC    0x74
+#define PRODUCT_CONNECTED_CAR                     0x75
+#define PRODUCT_INDUSTRY_HANDHELD                 0x76
+#define PRODUCT_PPI_PRO                           0x77
+#define PRODUCT_ARM64_SERVER                      0x78
 #define PRODUCT_EDUCATION                         0x79
 #define PRODUCT_EDUCATION_N                       0x7a
+#define PRODUCT_IOTUAP                            0x7B
+#define PRODUCT_CLOUD_HOST_INFRASTRUCTURE_SERVER  0x7C
+#define PRODUCT_ENTERPRISE_S                      0x7D
+#define PRODUCT_ENTERPRISE_S_N                    0x7E
+#define PRODUCT_PROFESSIONAL_S                    0x7F
+#define PRODUCT_PROFESSIONAL_S_N                  0x80
+#define PRODUCT_ENTERPRISE_S_EVALUATION           0x81
+#define PRODUCT_ENTERPRISE_S_N_EVALUATION         0x82
 #define PRODUCT_MOBILE_ENTERPRISE                 0x85
 
 #define PRODUCT_UNLICENSED                        0xabcdabcd
@@ -1299,12 +1333,13 @@ inline ENUMTYPE &operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((i
 #define DBG_RIPEXCEPTION ((DWORD)0x40010007)
 #define DBG_CONTROL_BREAK ((DWORD)0x40010008)
 #define DBG_COMMAND_EXCEPTION ((DWORD)0x40010009)
+#define DBG_PRINTEXCEPTION_WIDE_C ((DWORD)0x4001000A)
 #define STATUS_GUARD_PAGE_VIOLATION ((DWORD)0x80000001)
 #define STATUS_DATATYPE_MISALIGNMENT ((DWORD)0x80000002)
 #define STATUS_BREAKPOINT ((DWORD)0x80000003)
 #define STATUS_SINGLE_STEP ((DWORD)0x80000004)
-#define STATUS_LONGJUMP ((DWORD)0x80000026)    
-#define STATUS_UNWIND_CONSOLIDATE ((DWORD)0x80000029)    
+#define STATUS_LONGJUMP ((DWORD)0x80000026)
+#define STATUS_UNWIND_CONSOLIDATE ((DWORD)0x80000029)
 #define DBG_EXCEPTION_NOT_HANDLED ((DWORD)0x80010001)
 #define STATUS_ACCESS_VIOLATION ((DWORD)0xC0000005)
 #define STATUS_IN_PAGE_ERROR ((DWORD)0xC0000006)
@@ -1520,6 +1555,7 @@ extern "C" {
 # if defined(__cplusplus)
 }
 # endif
+#include <emmintrin.h>
 
 #define FastFence __faststorefence
 #define LoadFence _mm_lfence
@@ -1745,10 +1781,10 @@ extern "C" {
 
 #define OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME "OutOfProcessFunctionTableCallback"
 
-#define UNW_FLAG_NHANDLER   0x00
-#define UNW_FLAG_EHANDLER   0x01
-#define UNW_FLAG_UHANDLER   0x02
-#define UNW_FLAG_CHAININFO  0x04
+#define UNW_FLAG_NHANDLER   0x0
+#define UNW_FLAG_EHANDLER   0x1
+#define UNW_FLAG_UHANDLER   0x2
+#define UNW_FLAG_CHAININFO  0x4
 
 #endif /* end of _AMD64_ */
 
@@ -1940,6 +1976,184 @@ extern "C" {
 #endif /* _ARM_ */
 
 
+#ifdef _ARM64_
+
+#if defined(__aarch64__) && !defined(RC_INVOKED)
+
+#ifdef __cplusplus
+  extern "C" {
+#endif
+
+#define BitTest _bittest
+#define BitTestAndComplement _bittestandcomplement
+#define BitTestAndSet _bittestandset
+#define BitTestAndReset _bittestandreset
+
+#define BitScanForward _BitScanForward
+#define BitScanReverse _BitScanReverse
+
+#define InterlockedIncrement16 _InterlockedIncrement16
+#define InterlockedDecrement16 _InterlockedDecrement16
+#define InterlockedCompareExchange16 _InterlockedCompareExchange16
+
+#define InterlockedAnd _InterlockedAnd
+#define InterlockedOr _InterlockedOr
+#define InterlockedXor _InterlockedXor
+#define InterlockedIncrement _InterlockedIncrement
+#define InterlockedIncrementAcquire InterlockedIncrement
+#define InterlockedIncrementRelease InterlockedIncrement
+#define InterlockedDecrement _InterlockedDecrement
+#define InterlockedDecrementAcquire InterlockedDecrement
+#define InterlockedDecrementRelease InterlockedDecrement
+#define InterlockedAdd _InterlockedAdd
+#define InterlockedExchange _InterlockedExchange
+#define InterlockedExchangeAdd _InterlockedExchangeAdd
+#define InterlockedCompareExchange _InterlockedCompareExchange
+#define InterlockedCompareExchangeAcquire InterlockedCompareExchange
+#define InterlockedCompareExchangeRelease InterlockedCompareExchange
+
+#define InterlockedAnd64 _InterlockedAnd64
+#define InterlockedAndAffinity InterlockedAnd64
+#define InterlockedOr64 _InterlockedOr64
+#define InterlockedOrAffinity InterlockedOr64
+#define InterlockedXor64 _InterlockedXor64
+#define InterlockedIncrement64 _InterlockedIncrement64
+#define InterlockedDecrement64 _InterlockedDecrement64
+#define InterlockedAdd64 _InterlockedAdd64
+#define InterlockedExchange64 _InterlockedExchange64
+#define InterlockedExchangeAcquire64 InterlockedExchange64
+#define InterlockedExchangeAdd64 _InterlockedExchangeAdd64
+#define InterlockedCompareExchange64 _InterlockedCompareExchange64
+#define InterlockedCompareExchangeAcquire64 InterlockedCompareExchange64
+#define InterlockedCompareExchangeRelease64 InterlockedCompareExchange64
+
+#define InterlockedExchangePointer _InterlockedExchangePointer
+#define InterlockedCompareExchangePointer _InterlockedCompareExchangePointer
+#define InterlockedCompareExchangePointerAcquire _InterlockedCompareExchangePointer
+#define InterlockedCompareExchangePointerRelease _InterlockedCompareExchangePointer
+
+#ifdef __cplusplus
+  }
+#endif
+#endif /* defined(__aarch64__) && !defined(RC_INVOKED) */
+
+#define EXCEPTION_READ_FAULT    0
+#define EXCEPTION_WRITE_FAULT   1
+#define EXCEPTION_EXECUTE_FAULT 8
+
+#if !defined(RC_INVOKED)
+
+#define CONTEXT_ARM64           0x400000
+#define CONTEXT_CONTROL         (CONTEXT_ARM64 | 0x00000001)
+#define CONTEXT_INTEGER         (CONTEXT_ARM64 | 0x00000002)
+#define CONTEXT_FLOATING_POINT  (CONTEXT_ARM64 | 0x00000004)
+#define CONTEXT_DEBUG_REGISTERS (CONTEXT_ARM64 | 0x00000008)
+
+#define CONTEXT_FULL (CONTEXT_CONTROL | CONTEXT_INTEGER)
+#define CONTEXT_ALL  (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_FLOATING_POINT | CONTEXT_DEBUG_REGISTERS)
+
+#define EXCEPTION_READ_FAULT    0
+#define EXCEPTION_WRITE_FAULT   1
+#define EXCEPTION_EXECUTE_FAULT 8
+
+#define ARM64_MAX_BREAKPOINTS   8
+#define ARM64_MAX_WATCHPOINTS   2
+
+#endif /* !defined(RC_INVOKED) */
+
+  typedef union _NEON128 {
+    struct
+    {
+        ULONGLONG Low;
+        LONGLONG High;
+    } DUMMYSTRUCTNAME;
+    double D[2];
+    float S[4];
+    WORD  H[8];
+    BYTE  B[16];
+  } NEON128, *PNEON128;
+
+  typedef struct _CONTEXT {
+    ULONG ContextFlags;                 /* 000 */
+    /* CONTEXT_INTEGER */
+    ULONG Cpsr;                         /* 004 */
+    union
+    {
+        struct
+        {
+            DWORD64 X0;                 /* 008 */
+            DWORD64 X1;                 /* 010 */
+            DWORD64 X2;                 /* 018 */
+            DWORD64 X3;                 /* 020 */
+            DWORD64 X4;                 /* 028 */
+            DWORD64 X5;                 /* 030 */
+            DWORD64 X6;                 /* 038 */
+            DWORD64 X7;                 /* 040 */
+            DWORD64 X8;                 /* 048 */
+            DWORD64 X9;                 /* 050 */
+            DWORD64 X10;                /* 058 */
+            DWORD64 X11;                /* 060 */
+            DWORD64 X12;                /* 068 */
+            DWORD64 X13;                /* 070 */
+            DWORD64 X14;                /* 078 */
+            DWORD64 X15;                /* 080 */
+            DWORD64 X16;                /* 088 */
+            DWORD64 X17;                /* 090 */
+            DWORD64 X18;                /* 098 */
+            DWORD64 X19;                /* 0a0 */
+            DWORD64 X20;                /* 0a8 */
+            DWORD64 X21;                /* 0b0 */
+            DWORD64 X22;                /* 0b8 */
+            DWORD64 X23;                /* 0c0 */
+            DWORD64 X24;                /* 0c8 */
+            DWORD64 X25;                /* 0d0 */
+            DWORD64 X26;                /* 0d8 */
+            DWORD64 X27;                /* 0e0 */
+            DWORD64 X28;                /* 0e8 */
+            DWORD64 Fp;                 /* 0f0 */
+            DWORD64 Lr;                 /* 0f8 */
+        } DUMMYSTRUCTNAME;
+        DWORD64 X[31];                  /* 008 */
+    } DUMMYUNIONNAME;
+    /* CONTEXT_CONTROL */
+    DWORD64 Sp;                         /* 100 */
+    DWORD64 Pc;                         /* 108 */
+    /* CONTEXT_FLOATING_POINT */
+    NEON128 V[32];                      /* 110 */
+    DWORD Fpcr;                         /* 310 */
+    DWORD Fpsr;                         /* 314 */
+    /* CONTEXT_DEBUG_REGISTERS */
+    DWORD Bcr[ARM64_MAX_BREAKPOINTS];   /* 318 */
+    DWORD64 Bvr[ARM64_MAX_BREAKPOINTS]; /* 338 */
+    DWORD Wcr[ARM64_MAX_WATCHPOINTS];   /* 378 */
+    DWORD64 Wvr[ARM64_MAX_WATCHPOINTS]; /* 380 */
+  } CONTEXT, *PCONTEXT;
+
+  typedef struct _IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY RUNTIME_FUNCTION, *PRUNTIME_FUNCTION;
+
+#define UNWIND_HISTORY_TABLE_SIZE 12
+
+  typedef struct _UNWIND_HISTORY_TABLE_ENTRY {
+    DWORD64 ImageBase;
+    PRUNTIME_FUNCTION FunctionEntry;
+  } UNWIND_HISTORY_TABLE_ENTRY, *PUNWIND_HISTORY_TABLE_ENTRY;
+
+  typedef struct _UNWIND_HISTORY_TABLE {
+    DWORD   Count;
+    BYTE    LocalHint;
+    BYTE    GlobalHint;
+    BYTE    Search;
+    BYTE    Once;
+    DWORD64 LowAddress;
+    DWORD64 HighAddress;
+    UNWIND_HISTORY_TABLE_ENTRY Entry[UNWIND_HISTORY_TABLE_SIZE];
+  } UNWIND_HISTORY_TABLE, *PUNWIND_HISTORY_TABLE;
+
+#define OUT_OF_PROCESS_FUNCTION_TABLE_CALLBACK_EXPORT_NAME "OutOfProcessFunctionTableCallback"
+
+#endif /* _ARM64_ */
+
+
 #ifdef _X86_
 
 #if defined(__i386__) && !defined(__x86_64) && !defined(RC_INVOKED)
@@ -1955,9 +2169,45 @@ extern "C" {
 #define BitScanForward _BitScanForward
 #define BitScanReverse _BitScanReverse
 
+#define InterlockedIncrement16 _InterlockedIncrement16
+#define InterlockedDecrement16 _InterlockedDecrement16
 #define InterlockedCompareExchange16 _InterlockedCompareExchange16
+
+#define InterlockedAnd _InterlockedAnd
+#define InterlockedOr _InterlockedOr
+#define InterlockedXor _InterlockedXor
+#define InterlockedIncrement _InterlockedIncrement
+#define InterlockedIncrementAcquire InterlockedIncrement
+#define InterlockedIncrementRelease InterlockedIncrement
+#define InterlockedDecrement _InterlockedDecrement
+#define InterlockedDecrementAcquire InterlockedDecrement
+#define InterlockedDecrementRelease InterlockedDecrement
 #define InterlockedAdd _InterlockedAdd
+#define InterlockedExchange _InterlockedExchange
+#define InterlockedExchangeAdd _InterlockedExchangeAdd
+#define InterlockedCompareExchange _InterlockedCompareExchange
+#define InterlockedCompareExchangeAcquire InterlockedCompareExchange
+#define InterlockedCompareExchangeRelease InterlockedCompareExchange
+
+#define InterlockedAnd64 _InterlockedAnd64
+#define InterlockedAndAffinity InterlockedAnd64
+#define InterlockedOr64 _InterlockedOr64
+#define InterlockedOrAffinity InterlockedOr64
+#define InterlockedXor64 _InterlockedXor64
+#define InterlockedIncrement64 _InterlockedIncrement64
+#define InterlockedDecrement64 _InterlockedDecrement64
 #define InterlockedAdd64 _InterlockedAdd64
+#define InterlockedExchange64 _InterlockedExchange64
+#define InterlockedExchangeAcquire64 InterlockedExchange64
+#define InterlockedExchangeAdd64 _InterlockedExchangeAdd64
+#define InterlockedCompareExchange64 _InterlockedCompareExchange64
+#define InterlockedCompareExchangeAcquire64 InterlockedCompareExchange64
+#define InterlockedCompareExchangeRelease64 InterlockedCompareExchange64
+
+#define InterlockedExchangePointer _InterlockedExchangePointer
+#define InterlockedCompareExchangePointer(Destination, ExChange, Comperand) (PVOID) (LONG_PTR)InterlockedCompareExchange ((LONG volatile *) (Destination),(LONG) (LONG_PTR) (ExChange),(LONG) (LONG_PTR) (Comperand))
+#define InterlockedCompareExchangePointerAcquire InterlockedCompareExchangePointer
+#define InterlockedCompareExchangePointerRelease InterlockedCompareExchangePointer
 
 #ifdef _PREFIX_
     /* BYTE __readfsbyte(DWORD Offset); moved to psdk_inc/intrin-impl.h */
@@ -1976,6 +2226,7 @@ extern "C" {
 #if defined(__i386__) && !defined(__x86_64)
 
 #ifdef __SSE2__
+#include <emmintrin.h>
 #define YieldProcessor _mm_pause
 #define MemoryBarrier _mm_mfence
 #else
@@ -2910,7 +3161,20 @@ __buildmemorybarrier()
       WinAccountCloneableControllersSid = 100,
       WinBuiltinAccessControlAssistanceOperatorsSid = 101,
       WinBuiltinRemoteManagementUsersSid = 102, WinAuthenticationAuthorityAssertedSid = 103,
-      WinAuthenticationServiceAssertedSid = 104
+      WinAuthenticationServiceAssertedSid = 104,
+      WinLocalAccountSid = 105,
+      WinLocalAccountAndAdministratorSid = 106,
+      WinAccountProtectedUsersSid = 107,
+      WinCapabilityAppointmentsSid = 108,
+      WinCapabilityContactsSid = 109,
+      WinAccountDefaultSystemManagedSid = 110,
+      WinBuiltinDefaultSystemManagedGroupSid = 111,
+      WinBuiltinStorageReplicaAdminsSid = 112,
+      WinAccountKeyAdminsSid = 113,
+      WinAccountEnterpriseKeyAdminsSid = 114,
+      WinAuthenticationKeyTrustSid = 115,
+      WinAuthenticationKeyPropertyMFASid = 116,
+      WinAuthenticationKeyPropertyAttestationSid = 117
 } WELL_KNOWN_SID_TYPE;
 
 #define SYSTEM_LUID { 0x3e7, 0x0 }
@@ -3891,69 +4155,132 @@ __buildmemorybarrier()
     typedef enum _PROCESS_MITIGATION_POLICY {
       ProcessDEPPolicy,
       ProcessASLRPolicy,
-      ProcessReserved1MitigationPolicy,
+      ProcessDynamicCodePolicy,
       ProcessStrictHandleCheckPolicy,
       ProcessSystemCallDisablePolicy,
       ProcessMitigationOptionsMask,
       ProcessExtensionPointDisablePolicy,
+      ProcessControlFlowGuardPolicy,
+      ProcessSignaturePolicy,
+      ProcessFontDisablePolicy,
+      ProcessImageLoadPolicy,
       MaxProcessMitigationPolicy
     } PROCESS_MITIGATION_POLICY,*PPROCESS_MITIGATION_POLICY;
 
     typedef struct _PROCESS_MITIGATION_ASLR_POLICY {
       __C89_NAMELESS union {
-	DWORD Flags;
-	__C89_NAMELESS struct {
-	  DWORD EnableBottomUpRandomization : 1;
-	  DWORD EnableForceRelocateImages : 1;
-	  DWORD EnableHighEntropy : 1;
-	  DWORD DisallowStrippedImages : 1;
-	  DWORD ReservedFlags : 28;
-	};
+        DWORD Flags;
+        __C89_NAMELESS struct {
+          DWORD EnableBottomUpRandomization : 1;
+          DWORD EnableForceRelocateImages : 1;
+          DWORD EnableHighEntropy : 1;
+          DWORD DisallowStrippedImages : 1;
+          DWORD ReservedFlags : 28;
+        };
       };
     } PROCESS_MITIGATION_ASLR_POLICY,*PPROCESS_MITIGATION_ASLR_POLICY;
 
     typedef struct _PROCESS_MITIGATION_DEP_POLICY {
       __C89_NAMELESS union {
-	DWORD Flags;
-	__C89_NAMELESS struct {
-	  DWORD Enable : 1;
-	  DWORD DisableAtlThunkEmulation : 1;
-	  DWORD ReservedFlags : 30;
-	};
+        DWORD Flags;
+        __C89_NAMELESS struct {
+          DWORD Enable : 1;
+          DWORD DisableAtlThunkEmulation : 1;
+          DWORD ReservedFlags : 30;
+        };
       };
       BOOLEAN Permanent;
     } PROCESS_MITIGATION_DEP_POLICY,*PPROCESS_MITIGATION_DEP_POLICY;
 
     typedef struct _PROCESS_MITIGATION_STRICT_HANDLE_CHECK_POLICY {
       __C89_NAMELESS union {
-	DWORD Flags;
-	__C89_NAMELESS struct {
-	  DWORD RaiseExceptionOnInvalidHandleReference : 1;
-	  DWORD HandleExceptionsPermanentlyEnabled : 1;
-	  DWORD ReservedFlags : 30;
-	};
+        DWORD Flags;
+        __C89_NAMELESS struct {
+          DWORD RaiseExceptionOnInvalidHandleReference : 1;
+          DWORD HandleExceptionsPermanentlyEnabled : 1;
+          DWORD ReservedFlags : 30;
+        };
       };
     } PROCESS_MITIGATION_STRICT_HANDLE_CHECK_POLICY,*PPROCESS_MITIGATION_STRICT_HANDLE_CHECK_POLICY;
 
     typedef struct _PROCESS_MITIGATION_SYSTEM_CALL_DISABLE_POLICY {
       __C89_NAMELESS union {
-	DWORD Flags;
-	__C89_NAMELESS struct {
-	  DWORD DisallowWin32kSystemCalls : 1;
-	  DWORD ReservedFlags : 31;
-	};
+        DWORD Flags;
+        __C89_NAMELESS struct {
+          DWORD DisallowWin32kSystemCalls : 1;
+          DWORD ReservedFlags : 31;
+        };
       };
     } PROCESS_MITIGATION_SYSTEM_CALL_DISABLE_POLICY,*PPROCESS_MITIGATION_SYSTEM_CALL_DISABLE_POLICY;
 
     typedef struct _PROCESS_MITIGATION_EXTENSION_POINT_DISABLE_POLICY {
       __C89_NAMELESS union {
-	DWORD Flags;
-	__C89_NAMELESS struct {
-	  DWORD DisableExtensionPoints : 1;
-	  DWORD ReservedFlags : 31;
-	};
+        DWORD Flags;
+        __C89_NAMELESS struct {
+          DWORD DisableExtensionPoints : 1;
+          DWORD ReservedFlags : 31;
+        };
       };
     } PROCESS_MITIGATION_EXTENSION_POINT_DISABLE_POLICY,*PPROCESS_MITIGATION_EXTENSION_POINT_DISABLE_POLICY;
+
+    typedef struct _PROCESS_MITIGATION_CONTROL_FLOW_GUARD_POLICY {
+      __C89_NAMELESS union {
+        DWORD  Flags;
+        __C89_NAMELESS struct {
+          DWORD EnableControlFlowGuard  :1;
+          DWORD EnableExportSuppression  :1;
+          DWORD StrictMode  :1;
+          DWORD ReservedFlags  :29;
+        };
+      };
+    } PROCESS_MITIGATION_CONTROL_FLOW_GUARD_POLICY, *PPROCESS_MITIGATION_CONTROL_FLOW_GUARD_POLICY;
+
+    typedef struct _PROCESS_MITIGATION_BINARY_SIGNATURE_POLICY {
+      __C89_NAMELESS union {
+        DWORD  Flags;
+        __C89_NAMELESS struct {
+          DWORD MicrosoftSignedOnly  :1;
+          DWORD StoreSignedOnly  :1;
+          DWORD MitigationOptIn  :1;
+          DWORD ReservedFlags  :29;
+        };
+      };
+    } PROCESS_MITIGATION_BINARY_SIGNATURE_POLICY, *PPROCESS_MITIGATION_BINARY_SIGNATURE_POLICY;
+
+    typedef struct _PROCESS_MITIGATION_DYNAMIC_CODE_POLICY {
+      __C89_NAMELESS union {
+        DWORD  Flags;
+        __C89_NAMELESS struct {
+          DWORD ProhibitDynamicCode  :1;
+          DWORD AllowThreadOptOut  :1;
+          DWORD AllowRemoteDowngrade  :1;
+          DWORD ReservedFlags  :30;
+        };
+      };
+    } PROCESS_MITIGATION_DYNAMIC_CODE_POLICY, *PPROCESS_MITIGATION_DYNAMIC_CODE_POLICY;
+
+    typedef struct _PROCESS_MITIGATION_FONT_DISABLE_POLICY {
+      __C89_NAMELESS union {
+        DWORD  Flags;
+        __C89_NAMELESS struct {
+          DWORD DisableNonSystemFonts  :1;
+          DWORD AuditNonSystemFontLoading  :1;
+          DWORD ReservedFlags  :30;
+        };
+      };
+    } PROCESS_MITIGATION_FONT_DISABLE_POLICY, *PPROCESS_MITIGATION_FONT_DISABLE_POLICY;
+
+    typedef struct _PROCESS_MITIGATION_IMAGE_LOAD_POLICY {
+      __C89_NAMELESS union {
+        DWORD  Flags;
+        __C89_NAMELESS struct {
+          DWORD NoRemoteImages  :1;
+          DWORD NoLowMandatoryLabelImages  :1;
+          DWORD PreferSystem32Images  :1;
+          DWORD ReservedFlags  :29;
+        };
+      };
+    } PROCESS_MITIGATION_IMAGE_LOAD_POLICY, *PPROCESS_MITIGATION_IMAGE_LOAD_POLICY;
 
     typedef struct _JOBOBJECT_BASIC_ACCOUNTING_INFORMATION {
       LARGE_INTEGER TotalUserTime;
@@ -5710,6 +6037,7 @@ __buildmemorybarrier()
 #define IMAGE_FILE_MACHINE_ARM 0x01c0
 #define IMAGE_FILE_MACHINE_ARMV7 0x01c4
 #define IMAGE_FILE_MACHINE_ARMNT 0x01c4
+#define IMAGE_FILE_MACHINE_ARM64 0xaa64
 #define IMAGE_FILE_MACHINE_THUMB 0x01c2
 #define IMAGE_FILE_MACHINE_AM33 0x01d3
 #define IMAGE_FILE_MACHINE_POWERPC 0x01F0
@@ -6900,6 +7228,22 @@ __buildmemorybarrier()
 	} DUMMYSTRUCTNAME;
       } DUMMYUNIONNAME;
     } IMAGE_ARM_RUNTIME_FUNCTION_ENTRY,*PIMAGE_ARM_RUNTIME_FUNCTION_ENTRY;
+
+    typedef struct _IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY {
+      DWORD BeginAddress;
+      __C89_NAMELESS union {
+	DWORD UnwindData;
+	__C89_NAMELESS struct {
+	  DWORD Flag : 2;
+	  DWORD FunctionLength : 11;
+	  DWORD RegF : 3;
+	  DWORD RegI : 4;
+	  DWORD H : 1;
+	  DWORD CR : 2;
+	  DWORD FrameSize : 9;
+	} DUMMYSTRUCTNAME;
+      } DUMMYUNIONNAME;
+    } IMAGE_ARM64_RUNTIME_FUNCTION_ENTRY,*PIMAGE_ARM64_RUNTIME_FUNCTION_ENTRY;
 
     typedef struct _IMAGE_RUNTIME_FUNCTION_ENTRY {
       DWORD BeginAddress;
@@ -8373,6 +8717,17 @@ typedef DWORD (WINAPI *PRTL_RUN_ONCE_INIT_FN)(PRTL_RUN_ONCE, PVOID, PVOID *);
     FORCEINLINE PVOID GetCurrentFiber(VOID) { return (PVOID)(((PNT_TIB)NtCurrentTeb())->FiberData); }
     FORCEINLINE PVOID GetFiberData (VOID) { return *(PVOID *)GetCurrentFiber (); }
 #endif /* arm */
+
+#if defined (__aarch64__) && !defined (__WIDL__)
+    struct _TEB *NtCurrentTeb (VOID);
+    PVOID GetCurrentFiber (VOID);
+    PVOID GetFiberData (VOID);
+    FORCEINLINE struct _TEB *NtCurrentTeb(VOID) { struct _TEB *teb;
+    __asm ("mov %0, x18" : "=r" (teb));
+    return teb; }
+    FORCEINLINE PVOID GetCurrentFiber(VOID) { return (PVOID)(((PNT_TIB)NtCurrentTeb())->FiberData); }
+    FORCEINLINE PVOID GetFiberData (VOID) { return *(PVOID *)GetCurrentFiber (); }
+#endif /* aarch64 */
 
 #ifndef _NTTMAPI_
 #define _NTTMAPI_

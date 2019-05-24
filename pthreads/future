@@ -1,0 +1,10 @@
+#ifndef H_future
+#define H_future
+
+#include "throw"
+#include <sdkddkver.h>
+#define _WINDOWS_
+#include "mingw-std-threads/mingw.future.h"
+#undef _WINDOWS_
+
+#endif

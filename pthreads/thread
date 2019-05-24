@@ -1,0 +1,28 @@
+#ifndef H_thread
+#define H_thread
+
+#include "throw"
+//#include <sdkddkver.h>
+#define RPC_NO_WINDOWS_H
+#define COM_NO_WINDOWS_H
+#define _APISETFILE_
+//#include <windows.h> //need <dbgeng.h>
+
+
+#include <basetsd.h>
+#include <WinDef.h>
+#include <WinNT.h>
+#include <winbase.h> //INFINITE
+
+#include <sysinfoapi.h>//SYSTEM_INFO
+#include <processthreadsapi.h> //GetCurrentThreadI
+
+
+#define _WINDOWS_
+#include "mingw-std-threads/mingw.thread.h"
+#undef _WINDOWS_
+#undef _APISETFILE_
+#undef COM_NO_WINDOWS_H
+#undef RPC_NO_WINDOWS_H
+
+#endif

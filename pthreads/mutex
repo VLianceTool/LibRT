@@ -1,0 +1,21 @@
+#ifndef H_mutex
+#define H_mutex
+
+#define _WINDOWS_
+#include <cassert>
+#include <chrono>
+#include <system_error>
+
+#if (WINVER < _WIN32_WINNT_VISTA)
+#include <atomic>
+#endif
+
+
+#include "throw"
+#include <c++/bits/std_mutex.h>
+#include <sdkddkver.h>
+#define _WINDOWS_
+#include "mingw-std-threads/mingw.mutex.h"
+#undef _WINDOWS_
+
+#endif
