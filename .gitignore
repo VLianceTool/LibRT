@@ -4,6 +4,7 @@ _cache/
 _old/
 bin/
 zips/
+lib/
 
 Emsc.cfg
 

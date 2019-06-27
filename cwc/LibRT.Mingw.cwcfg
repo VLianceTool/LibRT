@@ -12,6 +12,8 @@
 
 <Exe>
 
+    <Compiler type="C">bin/gcc.exe -std=c99 </Compiler>
+	
     <Compiler>bin/g++.exe</Compiler>
 	<Linker>bin/g++.exe</Linker>
     <Linker_Static>bin/ar.exe</Linker_Static>
