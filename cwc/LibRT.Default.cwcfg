@@ -8,7 +8,11 @@
    
     <Type name="C">   <Extention>c</Extention>              </Type>
     <Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
+	
      <!-- <Type name="C~">  <Extention>cw</Extention>       </Type>-->
+	 
+	 <BinExt>exe</BinExt>
+	 
 </Config>
 
 
