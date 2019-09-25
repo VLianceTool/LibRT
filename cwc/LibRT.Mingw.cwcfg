@@ -56,9 +56,9 @@
 	<Linker_Dynamic>-shared </Linker_Dynamic>
 
 	<Debug>-g</Debug>
-	<O2>-O2</O2>
-	<O3>-O3</O3>
-	<OS>-Os</OS>
+	<O2>-O2 -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2>
+	<O3>-O3 -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
+	<OS>-Os -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
    
 </Arguments>
   
