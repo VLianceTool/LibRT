@@ -85,22 +85,28 @@
     <!-- <CompilerLinker type="C++">-std=c++11 </CompilerLinker> --> <!--  (set a defalut value)  -->
     <!-- -femulated-tls -->
     <CompilerLinker>-Wno-pragma-pack -m32 </CompilerLinker>
+	
+	
+	<Compiler>-Wglobal-constructors</Compiler>
+    <Compiler>-Wexit-time-destructors</Compiler> 
    
+    <Compiler>-Werror=return-type </Compiler>
+	   
     <Compiler>-MD </Compiler>
     <Linker>-I"{_pProject}" </Linker>
    
     <Linker>-Qunused-arguments -Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Qunused-arguments -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>   
  
-    <Linker>-Werror=return-type </Linker>
+
    
-    <Linker>-static-libgcc -static-libstdc++  -v </Linker>
+     <Linker>-static-libgcc -static-libstdc++  -v </Linker> 
     <Linker_Static>-r -s </Linker_Static>
     <Linker_Dynamic>-target i686-pc-mingw32  -shared </Linker_Dynamic>
 
     <Debug>-g</Debug>
-    <O2>-O2</O2>
-    <O3>-O3</O3>
-    <OS>-Os</OS>
+    <O2>-O2 -s</O2>
+    <O3>-O3 -s</O3>
+    <OS>-Os -s</OS>
   
 </Arguments>
 
