@@ -104,9 +104,9 @@
     <Linker_Dynamic>-target i686-pc-mingw32  -shared </Linker_Dynamic>
 
     <Debug>-g</Debug>
-    <O2>-O2 -s</O2>
-    <O3>-O3 -s</O3>
-    <OS>-Os -s</OS>
+    <O2>-O2</O2>
+    <O3>-O3</O3>
+    <OS>-Os</OS>
   
 </Arguments>
 
