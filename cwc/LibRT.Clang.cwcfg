@@ -37,13 +37,12 @@
     <CompilerLinker>-target i686-pc-mingw32 </CompilerLinker>
 	
    	<!-- <Compiler>-Wno-error=return-type-c-linkage</Compiler> -->
-	<Compiler>-Wno-return-type-c-linkage</Compiler> 	<!-- Export C with class is acceptable when using it from C++ (Just for Clang): To Follow GCC which is disabled by default -->
-   
+
         <!--
     <CompilerLinker>-I"{_pModule}clang_inc/" </CompilerLinker>
     <CompilerLinker>-I"{_pModule}clang_inc/clang-c/" </CompilerLinker>
     <CompilerLinker>-I"{_pModule}include/" </CompilerLinker>
--->
+	-->
 
     <CompilerLinker>-I"{_pModule}clang_inc/" </CompilerLinker>
 	<CompilerLinker>-I"{_pModule}pthreads/" </CompilerLinker>
@@ -92,10 +91,16 @@
 	
 	<Compiler>-Wglobal-constructors</Compiler>
     <Compiler>-Wexit-time-destructors</Compiler> 
-   
+ 
     <Compiler>-Werror=return-type </Compiler>
-	   
+	<Compiler>-Wno-return-type-c-linkage</Compiler> 	<!-- Export C with class is acceptable when using it from C++ (Just for Clang): To Follow GCC which is disabled by default -->
+   
+	
+   
     <Compiler>-MD </Compiler>
+	
+
+	
     <Linker>-I"{_pProject}" </Linker>
    
     <Linker>-Qunused-arguments -Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Qunused-arguments -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>   
@@ -106,6 +111,8 @@
     <Linker_Static>-r -s </Linker_Static>
     <Linker_Dynamic>-target i686-pc-mingw32  -shared </Linker_Dynamic>
 
+	
+	
     <Debug>-g</Debug>
     <O2>-O2</O2>
     <O3>-O3</O3>
