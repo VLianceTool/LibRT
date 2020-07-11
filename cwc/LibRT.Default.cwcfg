@@ -15,7 +15,7 @@
 
 <Exe>
 
-    <Compiler type="C">bin/gcc.exe -std=c99 </Compiler>
+    <Compiler type="C">bin/gcc.exe -std=gnu99 </Compiler> <!-- std=c99 -->
 	
     <Compiler>bin/g++.exe</Compiler>
 	<Linker>bin/g++.exe</Linker>

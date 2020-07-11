@@ -21,7 +21,7 @@
     <Debugger>gdb/gdb_32.exe</Debugger>
     <Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
 
-    <Compiler type="C">bin/clang.exe -std=c99 </Compiler>
+    <Compiler type="C">bin/clang.exe -std=gnu99 </Compiler> <!-- std=c99 -->
 
     <Compiler>bin/clang++.exe</Compiler>
 
