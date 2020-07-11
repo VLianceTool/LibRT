@@ -114,9 +114,9 @@
 	
 	
     <Debug>-g</Debug>
-    <O2>-O2</O2>
-    <O3>-O3</O3>
-    <OS>-Os</OS>
+    <O2>-O2 -DNDEBUG </O2>
+    <O3>-O3 -DNDEBUG </O3>
+    <OS>-Os -DNDEBUG </OS>
   
 </Arguments>
 
