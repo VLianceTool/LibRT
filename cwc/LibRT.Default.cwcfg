@@ -26,9 +26,13 @@
 	<Debugger>gdb/gdb_32.exe</Debugger>
 	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
 	
+	<clang>bin/clang.exe</clang>
+	<gcc>bin/gcc.exe</gcc>
 	<ld>bin/ld.exe</ld>
 	<objcopy>bin/objcopy.exe</objcopy>
 	<objdump>bin/objdump.exe</objdump>
+	<nasm>nasm/nasm.exe</nasm>
+	<as>bin/as.exe</as>
 	
 </Exe>
 
