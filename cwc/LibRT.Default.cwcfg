@@ -25,8 +25,10 @@
 	
 	<Debugger>gdb/gdb_32.exe</Debugger>
 	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
-
-	<Resource></Resource>
+	
+	<ld>bin/ld.exe</ld>
+	<objcopy>bin/objcopy.exe</objcopy>
+	<objdump>bin/objdump.exe</objdump>
 	
 </Exe>
 
