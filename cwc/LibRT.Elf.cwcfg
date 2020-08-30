@@ -1,0 +1,68 @@
+﻿<Toolchain> <!-- LibRT Cwc Config (Mingw) -->
+
+<Config>
+	<Platform name="Windows" default="true"></Platform>
+	 <!-- <Platform name="Linux"></Platform>-->
+	
+	<Type name="C">   <Extention>c</Extention>              </Type>
+	<Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
+	 <!-- <Type name="C~">  <Extention>cw</Extention>             </Type>-->
+	 
+	<BinExt>exe</BinExt>
+	  
+</Config>
+
+
+<Exe>
+
+    <Compiler type="C">elf_tool/bin/i686-elf-gcc.exe -std=gnu99 </Compiler> <!-- std=c99 -->
+	
+    <Compiler>elf_tool/bin/i686-elf-g++.exe</Compiler>
+	<Linker>elf_tool/bin/i686-elf-g++.exe</Linker>
+    <Linker_Static>bin/ar.exe</Linker_Static>
+    <Linker_Dynamic>bin/g++.exe</Linker_Dynamic>
+	
+	
+	<Debugger>gdb/gdb_32.exe</Debugger>
+	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
+	
+	<clang>bin/clang.exe</clang>
+	<gcc>elf_tool/bin/i686-elf-gcc.exe</gcc>
+	<gccori>bin/gcc.exe</gccori>
+	<ld>elf_tool/bin/i686-elf-ld.exe</ld>
+	<objcopy>elf_tool/bin/i686-elf-objcopy.exe</objcopy>
+	<objdump>elf_tool/bin/i686-elf-objdump.exe</objdump>
+	<nasm>nasm/nasm.exe</nasm>
+	<as>elf_tool/bin/i686-elf-as</as>
+	
+</Exe>
+
+<Arguments>
+
+	
+	<CompilerLinker>-I"{_pProject}" </CompilerLinker>
+
+	<!-- <CompilerLinker>-fno-rtti </CompilerLinker>-->
+	<CompilerLinker>-m32 </CompilerLinker>
+	<!-- <CompilerLinker type="C++">-std=c++11 </CompilerLinker> --> <!--  (set a defalut value)  --> 
+
+	<Compiler>-MD </Compiler>
+	<Linker>-I"{_pProject}" </Linker>
+
+	<Linker>-Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>	
+  
+	<Linker>-Werror=return-type </Linker>
+	
+	<Linker>-static-libgcc -static-libstdc++ </Linker>
+	<Linker_Static>rcs </Linker_Static>
+	<Linker_Dynamic>-shared </Linker_Dynamic>
+
+	<Debug>-g</Debug>
+	<O2>-O2 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2>
+	<O3>-O3 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
+	<OS>-Os -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
+   
+</Arguments>
+  
+</Toolchain> <!-- End -->
+
