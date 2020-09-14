@@ -26,6 +26,7 @@
 	<Debugger>gdb/gdb_32.exe</Debugger>
 	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
 	
+	<shdc>shader/sokol-shdc.exe</shdc>
 	<clang>bin/clang.exe</clang>
 	<gcc>bin/gcc.exe</gcc>
 	<ld>bin/ld.exe</ld>
@@ -38,11 +39,12 @@
 
 <Arguments>
 
-	<CompilerLinker>-I"{_pModule}include/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/c++/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}i686-w64-mingw32/include/c++/backward/" </CompilerLinker>
-	<CompilerLinker>-I"{_pModule}pthreads/" </CompilerLinker>
+	<Compiler>-I"{_pModule}include/" </Compiler>
+	<Compiler>-I"{_pModule}i686-w64-mingw32/include/" </Compiler>
+	<Compiler>-I"{_pModule}i686-w64-mingw32/include/c++/" </Compiler>
+	<Compiler>-I"{_pModule}i686-w64-mingw32/include/c++/backward/" </Compiler>
+	<Compiler>-I"{_pModule}pthreads/" </Compiler>
+	
 
 	<CompilerLinker>-I"{_pProject}" </CompilerLinker>
 

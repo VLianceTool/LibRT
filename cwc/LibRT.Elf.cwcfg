@@ -25,7 +25,8 @@
 	
 	<Debugger>gdb/gdb_32.exe</Debugger>
 	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
-	
+		
+	<shdc>shader/sokol-shdc.exe</shdc>
 	<clang>bin/clang.exe</clang>
 	<gcc>elf_tool/bin/i686-elf-gcc.exe</gcc>
 	<gccori>bin/gcc.exe</gccori>

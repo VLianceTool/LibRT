@@ -24,7 +24,8 @@
     <Compiler type="C">bin/clang.exe -std=gnu99 </Compiler> <!-- std=c99 -->
 
     <Compiler>bin/clang++.exe</Compiler>
-
+	
+	<shdc>shader/sokol-shdc.exe</shdc>
     <Linker>bin/clang++.exe</Linker>
     <Linker_Static>bin/ar.exe</Linker_Static>
     <Linker_Dynamic>bin/clang++.exe</Linker_Dynamic>
