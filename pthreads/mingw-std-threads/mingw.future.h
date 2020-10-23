@@ -19,7 +19,7 @@
 #error The MinGW STD Threads library requires a compiler supporting C++11.
 #endif
 
-#include <future>
+#include <c++/future>
 
 #include <cassert>
 #include <vector>
