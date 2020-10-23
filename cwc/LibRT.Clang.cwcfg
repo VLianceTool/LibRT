@@ -110,7 +110,7 @@
    
      <Linker>-static-libgcc -static-libstdc++  -v </Linker> 
     <Linker_Static>-r -s </Linker_Static>
-    <Linker_Dynamic>-target i686-pc-mingw32  -shared </Linker_Dynamic>
+    <Linker_Dynamic>-target i686-pc-mingw32  -shared -fPIC</Linker_Dynamic>
 
 	
 	

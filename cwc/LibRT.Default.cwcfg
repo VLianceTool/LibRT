@@ -61,7 +61,7 @@
 	
 	<Linker>-static-libgcc -static-libstdc++ </Linker>
 	<Linker_Static>rcs </Linker_Static>
-	<Linker_Dynamic>-shared </Linker_Dynamic>
+	<Linker_Dynamic>-shared -fPIC</Linker_Dynamic>
 
 	<Debug>-g</Debug>
 	<O2>-O2 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2>
