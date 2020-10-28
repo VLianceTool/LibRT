@@ -61,9 +61,10 @@
 	
 	<Linker>-static-libgcc -static-libstdc++ </Linker>
 	<Linker_Static>rcs </Linker_Static>
-	<Linker_Dynamic>-shared </Linker_Dynamic>
+	<Linker_Dynamic>-shared -ggdb</Linker_Dynamic> <!-- ggdb3? -->
 
-	<Debug>-g</Debug>
+	<Profiler>-ggdb -pg </Profiler> 
+	<Debug>-ggdb </Debug>  <!-- ggdb3? -->
 	<O2>-O2 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2>
 	<O3>-O3 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
 	<OS>-Os -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
