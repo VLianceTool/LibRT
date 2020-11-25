@@ -39,10 +39,11 @@
 
 <Arguments>
 
-	<Compiler>-I"{_pModule}include/" </Compiler>
+
 	<Compiler>-I"{_pModule}i686-w64-mingw32/include/" </Compiler>
 	<Compiler>-I"{_pModule}i686-w64-mingw32/include/c++/" </Compiler>
 	<Compiler>-I"{_pModule}i686-w64-mingw32/include/c++/backward/" </Compiler>
+	<Compiler>-I"{_pModule}include/" </Compiler>
 	<Compiler>-I"{_pModule}pthreads/" </Compiler>
 	
 
@@ -64,7 +65,7 @@
 	<Linker_Dynamic>-shared -fPIC</Linker_Dynamic>
 	<Profiler>-pg </Profiler> 
 	<Debug>-ggdb </Debug>  <!-- ggdb3? -->
-	<O2>-O2 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2>
+	<O2>-O2 -DNDEBUG  -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2> <!-- TODO -DNDEBUG -->
 	<O3>-O3 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
 	<OS>-Os -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
    
