@@ -17,6 +17,11 @@
 
     <Compiler type="C">bin/gcc.exe -std=gnu99 </Compiler> <!-- std=c99 -->
 	
+    <Compiler type="C">	-Werror=implicit-function-declaration </Compiler> 
+    <Compiler type="C">	-Werror=int-conversion </Compiler> 
+    <Compiler type="C">	-Werror=incompatible-pointer-types </Compiler> 
+						
+	
     <Compiler>bin/g++.exe</Compiler>
 	<Linker>bin/g++.exe</Linker>
     <Linker_Static>bin/ar.exe</Linker_Static>
