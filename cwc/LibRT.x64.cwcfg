@@ -1,0 +1,79 @@
+﻿<Toolchain> <!-- LibRT Cwc Config (Mingw) -->
+
+<Config>
+	<Platform name="Windows" default="true"></Platform>
+	 <!-- <Platform name="Linux"></Platform>-->
+	
+	<Type name="C">   <Extention>c</Extention>              </Type>
+	<Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
+	 <!-- <Type name="C~">  <Extention>cw</Extention>             </Type>-->
+	 
+	<BinExt>exe</BinExt>
+	  
+</Config>
+
+
+<Exe>
+
+    <Compiler type="C">bin/gcc.exe -std=gnu99 </Compiler> <!-- std=c99 -->			
+	
+    <Compiler>bin/g++.exe</Compiler>
+	<Linker>bin/g++.exe</Linker>
+    <Linker_Static>bin/ar.exe</Linker_Static>
+    <Linker_Dynamic>bin/g++.exe</Linker_Dynamic>
+	
+	
+	<Debugger>gdb/gdb_64.exe</Debugger>
+	<Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
+	
+	<shdc>shader/sokol-shdc.exe</shdc>
+	<clang>bin/clang.exe</clang>
+	<gcc>bin/gcc.exe</gcc>
+	<ld>bin/ld.exe</ld>
+	<objcopy>bin/objcopy.exe</objcopy>
+	<objdump>bin/objdump.exe</objdump>
+	<nasm>nasm/nasm.exe</nasm>
+	<as>bin/as.exe</as>
+	
+</Exe>
+
+<Arguments>
+
+    <Compiler type="C">	-Werror=implicit-function-declaration </Compiler> 
+    <Compiler type="C">	-Werror=int-conversion </Compiler> 
+    <Compiler type="C">	-Werror=incompatible-pointer-types </Compiler> 
+			
+
+	<Compiler>-I"{_pModule}i686-w64-mingw32/include/" </Compiler>
+	<Compiler>-I"{_pModule}i686-w64-mingw32/include/c++/" </Compiler>
+	<Compiler>-I"{_pModule}i686-w64-mingw32/include/c++/backward/" </Compiler>
+	<Compiler>-I"{_pModule}include/" </Compiler>
+	<Compiler>-I"{_pModule}pthreads/" </Compiler>
+	
+
+	<CompilerLinker>-I"{_pProject}" </CompilerLinker>
+
+	<!-- <CompilerLinker>-fno-rtti </CompilerLinker>-->
+	<CompilerLinker>-m64 </CompilerLinker>
+	<!-- <CompilerLinker type="C++">-std=c++11 </CompilerLinker> --> <!--  (set a defalut value)  --> 
+
+	<Compiler>-MD </Compiler>
+	<Linker>-I"{_pProject}" </Linker>
+
+	<Linker>-Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>	
+  
+	<Linker>-Werror=return-type </Linker>
+	
+	<Linker>-static-libgcc -static-libstdc++ </Linker>
+	<Linker_Static>rcs </Linker_Static>
+	<Linker_Dynamic>-shared -fPIC</Linker_Dynamic>
+	<Profiler>-pg </Profiler> 
+	<Debug>-ggdb </Debug>  <!-- ggdb3? -->
+	<O2>-O2 -DNDEBUG  -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2> <!-- TODO -DNDEBUG -->
+	<O3>-O3 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
+	<OS>-Os -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
+   
+</Arguments>
+  
+</Toolchain> <!-- End -->
+
