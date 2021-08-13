@@ -30,15 +30,27 @@
 #include <cassert>
 #include <chrono>
 #include <system_error>
-#include <windows.h>
 
+#include <sdkddkver.h>  //  Detect Windows version.
 #if (WINVER < _WIN32_WINNT_VISTA)
 #include <atomic>
+#endif
+#if (defined(__MINGW32__) && !defined(__MINGW64_VERSION_MAJOR))
+#pragma message "The Windows API that MinGW-w32 provides is not fully compatible\
+ with Microsoft's API. We'll try to work around this, but we can make no\
+ guarantees. This problem does not exist in MinGW-w64."
+#include <windows.h>    //  No further granularity can be expected.
+#else
+#if (WINVER < _WIN32_WINNT_VISTA)
+#include <windef.h>
+#include <winbase.h>  //  For CreateSemaphore
+#include <handleapi.h>
+#endif
+#include <synchapi.h>
 #endif
 
 #include "mingw.mutex.h"
 #include "mingw.shared_mutex.h"
-#include "mingw.throw.h"
 
 #if !defined(_WIN32_WINNT) || (_WIN32_WINNT < 0x0501)
 #error To use the MinGW-std-threads library, you will need to define the macro _WIN32_WINNT to be 0x0501 (Windows XP) or higher.
@@ -72,15 +84,15 @@ public:
     condition_variable_any(const condition_variable_any&) = delete;
     condition_variable_any& operator=(const condition_variable_any&) = delete;
     condition_variable_any()
-        :   mSemaphore(CreateSemaphore(NULL, 0, 0xFFFF, NULL))
+        :   mSemaphore(CreateSemaphoreA(NULL, 0, 0xFFFF, NULL))
     {
         if (mSemaphore == NULL)
-            throw_error<std::system_error>(GetLastError(), std::generic_category());
+            throw std::system_error(GetLastError(), std::generic_category());
         mWakeEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
         if (mWakeEvent == NULL)
         {
             CloseHandle(mSemaphore);
-            throw_error<std::system_error>(GetLastError(), std::generic_category());
+            throw std::system_error(GetLastError(), std::generic_category());
         }
     }
     ~condition_variable_any()
@@ -120,9 +132,8 @@ private:
         else
         {
             using namespace std;
-            throw_error<std::system_error>(make_error_code(errc::protocol_error));
+            throw system_error(make_error_code(errc::protocol_error));
         }
-		return false;
     }
 public:
     template <class M>
@@ -261,6 +272,7 @@ namespace vista
 //  If compiling for Vista or higher, use the native condition variable.
 class condition_variable
 {
+    static constexpr DWORD kInfinite = 0xffffffffl;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
     CONDITION_VARIABLE cvariable_ = CONDITION_VARIABLE_INIT;
@@ -347,7 +359,7 @@ public:
 
     void wait (unique_lock<mutex> & lock)
     {
-        wait_impl(lock, INFINITE);
+        wait_impl(lock, kInfinite);
     }
 
     template<class Predicate>
@@ -363,8 +375,8 @@ public:
     {
         using namespace std::chrono;
         auto timeout = duration_cast<milliseconds>(rel_time).count();
-        DWORD waittime = (timeout < INFINITE) ? ((timeout < 0) ? 0 : static_cast<DWORD>(timeout)) : (INFINITE - 1);
-        bool result = wait_impl(lock, waittime) || (timeout >= INFINITE);
+        DWORD waittime = (timeout < kInfinite) ? ((timeout < 0) ? 0 : static_cast<DWORD>(timeout)) : (kInfinite - 1);
+        bool result = wait_impl(lock, waittime) || (timeout >= kInfinite);
         return result ? cv_status::no_timeout : cv_status::timeout;
     }
 
@@ -401,6 +413,7 @@ public:
 
 class condition_variable_any
 {
+    static constexpr DWORD kInfinite = 0xffffffffl;
     using native_shared_mutex = windows7::shared_mutex;
 
     condition_variable internal_cv_ {};
@@ -467,7 +480,7 @@ public:
     template<class L>
     void wait (L & lock)
     {
-        wait_impl(lock, INFINITE);
+        wait_impl(lock, kInfinite);
     }
 
     template<class L, class Predicate>
@@ -482,8 +495,8 @@ public:
     {
         using namespace std::chrono;
         auto timeout = duration_cast<milliseconds>(period).count();
-        DWORD waittime = (timeout < INFINITE) ? ((timeout < 0) ? 0 : static_cast<DWORD>(timeout)) : (INFINITE - 1);
-        bool result = wait_impl(lock, waittime) || (timeout >= INFINITE);
+        DWORD waittime = (timeout < kInfinite) ? ((timeout < 0) ? 0 : static_cast<DWORD>(timeout)) : (kInfinite - 1);
+        bool result = wait_impl(lock, waittime) || (timeout >= kInfinite);
         return result ? cv_status::no_timeout : cv_status::timeout;
     }
 
