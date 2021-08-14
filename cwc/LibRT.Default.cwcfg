@@ -69,9 +69,9 @@
 	<Linker_Dynamic>-shared -fPIC</Linker_Dynamic>
 	<Profiler>-pg </Profiler> 
 	<Debug>-ggdb </Debug>  <!-- ggdb3? -->
-	<O2>-O2 -DNDEBUG  -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2> <!-- TODO -DNDEBUG -->
-	<O3>-O3 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
-	<OS>-Os -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
+	<O2>-O2 -DNDEBUG -s -Wl,--gc-sections</O2> <!-- TODO -DNDEBUG -->
+	<O3>-O3 -DNDEBUG -s -Wl,--gc-sections</O3>
+	<OS>-Os -DNDEBUG -s -Wl,--gc-sections</OS>
    
 </Arguments>
   
