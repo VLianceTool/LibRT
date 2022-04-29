@@ -48,20 +48,23 @@
 	<!-- <CompilerLinker type="C++">-std=c++11 </CompilerLinker> --> <!--  (set a defalut value)  --> 
 
 	<Compiler>-MD </Compiler>
+	<Compiler>-Werror=return-type </Compiler>
+	
+	
 	<Linker>-I"{_pProject}" </Linker>
 
 	<Linker>-Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>	
   
-	<Linker>-Werror=return-type </Linker>
+
 	
 	<Linker>-static-libgcc -static-libstdc++ </Linker>
 	<Linker_Static>rcs </Linker_Static>
 	<Linker_Dynamic>-shared </Linker_Dynamic>
 
 	<Debug>-g</Debug>
-	<O2>-O2 -DNDEBUG -s -Wl,--gc-sections</O2>
-	<O3>-O3 -DNDEBUG -s -Wl,--gc-sections</O3>
-	<OS>-Os -DNDEBUG -s -Wl,--gc-sections</OS>
+	<O2>-O2 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O2>
+	<O3>-O3 -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</O3>
+	<OS>-Os -DNDEBUG -s -ffunction-sections -fdata-sections -Wl,--gc-sections</OS>
    
 </Arguments>
   
