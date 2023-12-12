@@ -2,7 +2,7 @@
 
 <Config>
 	<Platform name="Windows" default="true"></Platform>
-	<Type name="C">   <Extention>c</Extention>              </Type>
+	<Type name="C">   <Extention>c,jc</Extention>              </Type>
 	<Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
 	<BinExt>exe</BinExt>
 	  
