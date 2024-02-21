@@ -1,0 +1,72 @@
+﻿<Toolchain>
+
+<Config>
+    <Platform name="Windows" default="true"></Platform>
+    <Type name="C">   <Extention>c,jc</Extention>              </Type>
+    <Type name="C++"> <Extention>c++,cc,cpp,cxx</Extention> </Type>
+	 <BinExt>exe</BinExt>
+	 
+</Config>
+
+<Exe>
+    <Debugger>gdb/gdb_64.exe</Debugger>
+    <Sanitizer>DrMemory/bin/drmemory.exe</Sanitizer>
+
+    <Compiler type="C">bin/clang.exe -std=gnu99 </Compiler> <!-- std=c99 -->
+    <Compiler>bin/clang++.exe</Compiler>
+	 <windres>bin/windres64.exe</windres>
+
+    <Linker>bin/clang++.exe</Linker>
+    <Linker_Static>bin/ar.exe</Linker_Static>
+    <Linker_Dynamic>bin/clang++.exe</Linker_Dynamic>
+
+    <Resource></Resource>
+</Exe>
+
+<Arguments>
+   <CompilerLinker>-target x86_64-w64-mingw32 </CompilerLinker>
+	
+   <CompilerLinker>-I"{_pModule}clang_inc/" </CompilerLinker>
+   <CompilerLinker>-I"{_pModule}pthreads/" </CompilerLinker>
+   <Compiler>-I"{_pModule}include/" </Compiler>
+   
+   <Compiler>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/" </Compiler>
+   <Compiler>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/c++/" </Compiler>
+   <Compiler>-I"{_pModule}lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32/" </Compiler>
+
+  	<Compiler>-I"{_pModule}i686-w64-mingw32/include/" </Compiler>
+
+   <CompilerLinker>-I"{_pProject}" </CompilerLinker>
+   <CompilerLinker>-fno-rtti -fno-exceptions </CompilerLinker>
+
+   <CompilerLinker>-m64 </CompilerLinker>
+   <CompilerLinker>-fcolor-diagnostics -fansi-escape-codes </CompilerLinker>
+   <CompilerLinker>-Wno-pragma-pack -m64 </CompilerLinker>
+
+   <Compiler>-Wglobal-constructors</Compiler>
+   <Compiler>-Wexit-time-destructors</Compiler> 
+
+   <Compiler>-Werror=return-type </Compiler>
+   <Compiler>-Wno-return-type-c-linkage</Compiler> 	<!-- Export C with class is acceptable when using it from C++ (Just for Clang): To Follow GCC which is disabled by default -->
+
+
+   <Linker>-nostartfiles</Linker>
+   <Linker>"{_pModule}i686-w64-mingw32/lib64/crt2.o"</Linker>
+   <Linker>-I"{_pProject}" </Linker>
+
+   <Linker>-L"{_pModule}i686-w64-mingw32/lib64/" -L"{_pModule}/lib/gcc/i686-w64-mingw32/8.1.0/64/"</Linker>
+
+   <Linker>-Qunused-arguments -Wno-unused-value -Wno-deprecated-register -Wno-ignored-attributes -Qunused-arguments -Wno-expansion-to-defined -Wno-ignored-pragmas </Linker>   
+   
+   <Linker>-static-libgcc -static-libstdc++  -v </Linker> 
+   <Linker_Static>-r -s </Linker_Static>
+   <Linker_Dynamic>-target x86_64-w64-mingw32  -shared -fPIC</Linker_Dynamic>
+
+   <Debug>-g</Debug>
+   <O2>-O2 -DNDEBUG </O2>
+   <O3>-O3 -DNDEBUG </O3>
+   <OS>-Os -DNDEBUG </OS>
+
+</Arguments>
+ 
+</Toolchain>
