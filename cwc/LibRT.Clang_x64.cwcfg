@@ -43,8 +43,12 @@
    <CompilerLinker>-fcolor-diagnostics -fansi-escape-codes </CompilerLinker>
    <CompilerLinker>-Wno-pragma-pack -m64 </CompilerLinker>
 
+   <!--
    <Compiler>-Wglobal-constructors</Compiler>
-   <Compiler>-Wexit-time-destructors</Compiler> 
+   <Compiler>-Wexit-time-destructors</Compiler>
+   -->   
+   
+   <Compiler>-Wno-expansion-to-defined  -Wno-ignored-attributes --Wno-typedef-redefinition -Wno-macro-redefined</Compiler> 
 
    <Compiler>-Werror=return-type </Compiler>
    <Compiler>-Wno-return-type-c-linkage</Compiler> 	<!-- Export C with class is acceptable when using it from C++ (Just for Clang): To Follow GCC which is disabled by default -->
