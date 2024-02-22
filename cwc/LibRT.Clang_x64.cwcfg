@@ -50,8 +50,6 @@
    <Compiler>-Wno-return-type-c-linkage</Compiler> 	<!-- Export C with class is acceptable when using it from C++ (Just for Clang): To Follow GCC which is disabled by default -->
 
 
-   <Linker>-nostartfiles</Linker>
-   <Linker>"{_pModule}i686-w64-mingw32/lib64/crt2.o"</Linker>
    <Linker>-I"{_pProject}" </Linker>
 
    <Linker>-L"{_pModule}i686-w64-mingw32/lib64/" -L"{_pModule}/lib/gcc/i686-w64-mingw32/8.1.0/64/"</Linker>
