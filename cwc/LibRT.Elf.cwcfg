@@ -25,7 +25,7 @@
    <ld>elf_tool/bin/i686-elf-ld.exe</ld>
    <objcopy>elf_tool/bin/i686-elf-objcopy.exe</objcopy>
    <objdump>elf_tool/bin/i686-elf-objdump.exe</objdump>
-   <nasm>nasm/nasm.exe</nasm>
+   <nasm>tools/nasm/nasm.exe</nasm>
    <as>elf_tool/bin/i686-elf-as</as>
 </Exe>
 

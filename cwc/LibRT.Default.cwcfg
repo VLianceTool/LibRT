@@ -24,7 +24,8 @@
    <ld>bin/ld.exe</ld>
    <objcopy>bin/objcopy.exe</objcopy>
    <objdump>bin/objdump.exe</objdump>
-   <nasm>nasm/nasm.exe</nasm>
+   <nasm>tools/nasm/nasm.exe</nasm>
+   <mt>tools/mt/mt.exe</mt>
    <as>bin/as.exe</as>
 </Exe>
 

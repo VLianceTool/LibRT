@@ -15,6 +15,7 @@
     <Compiler type="C">bin/clang.exe -std=gnu99 </Compiler> <!-- std=c99 -->
     <Compiler>bin/clang++.exe</Compiler>
 	 <windres>bin/windres.exe</windres>
+    <mt>tools/mt/mt.exe</mt>
 
     <Linker>bin/clang++.exe</Linker>
     <Linker_Static>bin/ar.exe</Linker_Static>
